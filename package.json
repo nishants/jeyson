@@ -6,6 +6,9 @@
   "scripts": {
     "test": "test"
   },
+  "directories": {
+    "test": "test"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nishants/jso-ng.git"
