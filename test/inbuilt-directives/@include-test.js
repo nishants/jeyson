@@ -4,44 +4,41 @@ var expect    = require('chai').expect,
 describe('@include', function() {
   var templatePath  = "../__partial",
       template      = {
-        "name"     : "fromParent",
+        name     : "fromParent",
         "@include" :  templatePath
       },
-      getTemplate = function(path){
-        expect(path).to.eql(templatePath);
-        return '{"origin": "template"}';
+      expectTemplate = function(expectedPath, tempate){
+        return {getTemplate: function(path){
+          expect(path).to.eql(expectedPath);
+          return JSON.stringify(tempate);
+        }};
       };
 
   it('should include a json', function () {
-    var scope         = {},
-        expected      = {
-          "name"     : "fromParent",
-          "origin"   :  "template"
+    var expected      = {
+          name     : "fromParent",
+          origin   :  "template"
         },
         result ;
 
-    result = compiler.compile(scope, template, {getTemplate: getTemplate});
+    result = compiler.compile({}, template, expectTemplate(templatePath, {"origin": "template"}));
 
-    expect(JSON.stringify(result)).to.eql(JSON.stringify(expected));
+    expect(result).to.eql(expected);
   });
 
   it('should support expressions in template', function () {
     var scope         = {message: "hello world !"},
         expected      = {
-          "name"     : "fromParent",
-          "origin"   :  "hello world !"
+          name     : "fromParent",
+          "origin" :  "hello world !"
         },
         template      = {
-          "name"     : "fromParent",
+          name     : "fromParent",
           "@include" :  templatePath
-        },
-        getTemplate = function(path){
-          expect(path).to.eql(templatePath);
-          return '{"origin": "{{message}}"}';
         },
         result ;
 
-    result = compiler.compile(scope, template, {getTemplate: getTemplate});
+    result = compiler.compile(scope, template, expectTemplate(templatePath, {"origin": "{{message}}"}));
 
     expect(JSON.stringify(result)).to.eql(JSON.stringify(expected));
   });
@@ -49,24 +46,20 @@ describe('@include', function() {
   it('should support in built directives in template', function () {
     var scope         = {list : ['one', 'two']},
         expected      = {
-          "name"   : "fromParent",
-          "list"   :  [{"name" : "one"},{"name" : "two"}]
+          name   : "fromParent",
+          "list"   :  [{name : "one"},{name : "two"}]
         },
         template      = {
-          "name"     : "fromParent",
+          name     : "fromParent",
           "@include" :  templatePath
-        },
-        getTemplate = function(path){
-          expect(path).to.eql(templatePath);
-          return JSON.stringify({
-            list: {
-              "@repeat": "val in list",
-              "name": "{{val}}"}
-          });
         },
         result ;
 
-    result = compiler.compile(scope, template, {getTemplate: getTemplate});
+    result = compiler.compile(scope, template, expectTemplate(templatePath, {
+      list: {
+        "@repeat": "val in list",
+        name: "{{val}}"}
+    }));
 
     expect(result).to.eql(expected);
   });
