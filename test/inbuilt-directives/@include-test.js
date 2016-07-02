@@ -23,4 +23,26 @@ describe('@include', function() {
 
     expect(JSON.stringify(result)).to.eql(JSON.stringify(expected));
   });
+
+  it('should support expressions in template', function () {
+    var scope         = {message: "hello world !"},
+        templatePath  = "../__partial",
+        expected      = {
+          "name"     : "fromParent",
+          "origin"   :  "hello world !"
+        },
+        template      = {
+          "name"     : "fromParent",
+          "@include" :  templatePath
+        },
+        readFile = function(path){
+          expect(path).to.eql(templatePath);
+          return '{"origin": "{{message}}"}';
+        },
+        result ;
+
+    result = compiler.compile(scope, template, {readFile: readFile});
+
+    expect(JSON.stringify(result)).to.eql(JSON.stringify(expected));
+  });
 });
