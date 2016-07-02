@@ -13,7 +13,7 @@ module.exports = {
         compile = function(scope, template){
           return self.compile(scope, template);
         },
-        readFile = function(path){
+        getTemplate = function(path){
           return templates.create(JSON.parse(config.readFile(path)));
         };
 
@@ -23,7 +23,7 @@ module.exports = {
     template.__ || (template = templates.create(template));
 
     if(template.isDirective()) {
-      return directives.link(scope, template, compile, readFile);
+      return directives.link(scope, template, compile, getTemplate);
     }
 
     for (var node in template) {

@@ -45,4 +45,31 @@ describe('@include', function() {
 
     expect(JSON.stringify(result)).to.eql(JSON.stringify(expected));
   });
+
+  it.skip('should support in built directives in template', function () {
+    var scope         = {list : ['one', 'two']},
+        templatePath  = "../__partial",
+        expected      = {
+          "name"   : "fromParent",
+          "list"   :  [{"name" : "one"},{"name" : "two"}]
+        },
+        template      = {
+          "name"     : "fromParent",
+          "@include" :  templatePath
+        },
+        readFile = function(path){
+          expect(path).to.eql(templatePath);
+          return JSON.stringify({
+            list: {
+              "@repeat": "val in list",
+              "name": "{{val}}"}
+          });
+        },
+        result ;
+
+    result = compiler.compile(scope, template, {readFile: readFile});
+
+    expect(result).to.eql(expected);
+  });
+
 });
