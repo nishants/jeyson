@@ -49,7 +49,7 @@ A JSON template system.
     });
 
     app.directive("@bar", {
-      link: function(scope, body, param){
+    link: function(scope, body, param){ ,./?
         body.otherChild = "bar";
         expect(param).to.equal("bar-param");
       }

@@ -1,5 +1,6 @@
 var repeater = require("./directives/repeat"),
     compileD = require("./directives/compile"),
+    include = require("./directives/include"),
     all = {};
 
 var Directives = {
@@ -30,4 +31,5 @@ var Directives = {
 };
 Directives.add("@repeat", {link: repeater.link});
 Directives.add("@compile", {link: compileD.link});
+Directives.add("@include", {link: include.link});
 module.exports = Directives;
