@@ -11,7 +11,7 @@ var Directives = {
   add: function (name, definition) {
     all[name] = {link: definition.link};
   },
-  link: function (scope, template, compile, readFile) {
+  link: function (scope, template, compile, getTemplate) {
     var directive,
         param;
 
@@ -24,7 +24,7 @@ var Directives = {
     param = template[directive.name];
     template.deleteDirective(directive.name)
 
-    var replace = directive.directive.link(scope, template, param, compile, readFile);
+    var replace = directive.directive.link(scope, template, param, compile, getTemplate);
     template = replace || compile(scope, template); // replace if directive returns valid value, else compile the template after directoryis done
     return template;
   }
