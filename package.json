@@ -1,6 +1,6 @@
 {
   "name": "jso-ng",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Json Templates",
   "main": "./src/index.js",
   "scripts": {
