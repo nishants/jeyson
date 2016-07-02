@@ -19,9 +19,10 @@ describe('@include', function() {
           name     : "fromParent",
           origin   :  "template"
         },
+        included = {"origin": "template"},
         result ;
 
-    result = compiler.compile({}, template, expectTemplate(templatePath, {"origin": "template"}));
+    result = compiler.compile({}, template, expectTemplate(templatePath, included));
 
     expect(result).to.eql(expected);
   });
@@ -36,9 +37,10 @@ describe('@include', function() {
           name       : "fromParent",
           "@include" :  templatePath
         },
+        included = {"origin": "{{message}}"},
         result ;
 
-    result = compiler.compile(scope, template, expectTemplate(templatePath, {"origin": "{{message}}"}));
+    result = compiler.compile(scope, template, expectTemplate(templatePath, included));
 
     expect(JSON.stringify(result)).to.eql(JSON.stringify(expected));
   });
@@ -53,13 +55,41 @@ describe('@include', function() {
           listOne     : "{{'1,2,3,4,5'.split(',')}}",
           "@include" :  templatePath
         },
+        included = {
+          listTwo: {
+            "@repeat": "val in list",
+            name: "{{val}}"
+          }
+        },
+        result;
+
+    result = compiler.compile(scope, template, expectTemplate(templatePath, included));
+
+    expect(result).to.eql(expected);
+  });
+
+  it('should support in built directives in template', function () {
+    var scope         = {list : ['one', 'two']},
+        expected      = {
+          listOne   : ["1", "2", "3", "4", "5"],
+          sub: {
+            listTwo :  [{name : "one"},{name : "two"}]
+          }
+        },
+        template      = {
+          listOne     : "{{'1,2,3,4,5'.split(',')}}",
+          sub: {
+            "@include" :  templatePath
+          }
+        },
+        included = {
+          listTwo: {
+            "@repeat": "val in list",
+            name: "{{val}}"}
+        },
         result ;
 
-    result = compiler.compile(scope, template, expectTemplate(templatePath, {
-      listTwo: {
-        "@repeat": "val in list",
-        name: "{{val}}"}
-    }));
+    result = compiler.compile(scope, template, expectTemplate(templatePath, included));
 
     expect(result).to.eql(expected);
   });
