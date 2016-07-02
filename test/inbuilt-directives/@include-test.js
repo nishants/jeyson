@@ -3,21 +3,26 @@ var expect    = require('chai').expect,
 
 describe('@include', function() {
   it('should include a json', function () {
-    var scope       = {},
-        template = {
-          "name" : "fromParent",
-          "@include" :""
+    var scope         = {},
+        templatePath  = "../__partial",
+        expected      = {
+          "name"     : "fromParent",
+          "origin"   :    "template"
         },
-        expected = {origin: "template"},
-        relativePath = "../__partial",
+        template      = {
+          "name"     : "fromParent",
+          "@include" :templatePath
+        },
         readFile = function(path){
-          expect(path).to.eql(relativePath);
-          return {origin: "template"};
+          expect(path).to.eql(templatePath);
+          return '{"origin": "template"}';
         },
         result ;
 
     result = compiler.compile(scope, template, {readFile: readFile});
 
-    expect(result).to.eql(expected);
+    expect(result.name).to.eql("fromParent");
+    expect(result.origin).to.eql("template");
+    //expect(result).to.eql(expected);
   });
 });

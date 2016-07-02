@@ -4,21 +4,23 @@ var linker = require("./linker"),
     directives = require("./directives");
 
 module.exports = {
-  $compile: function (scope, template) {
-    return this.compile(scopes.create(scope), template);
+  $compile: function (scope, template, config) {
+    return this.compile(scopes.create(scope), template, config);
   },
-  compile: function (scope, template) {
+  compile: function (scope, template, config) {
     var result = {},
         self = this,
         compile = function(scope, template){
           return self.compile(scope, template);
         };
 
+    config = config ? config : {};
+
     //TODO invoke compile through $comiple (always)
     template.__ || (template = templates.create(template));
 
     if(template.isDirective()) {
-      return directives.link(scope, template, compile);
+      return directives.link(scope, template, compile, config.readFile);
     }
 
     for (var node in template) {
