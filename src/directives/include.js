@@ -1,9 +1,9 @@
 module.exports = {
   link: function(scope, template, params, compile, readFile){
-    var includeTemplate = JSON.parse(readFile(params));
-    for(var field in includeTemplate){
-      template[field] = includeTemplate[field];
+    var includes = readFile(params);
+    for(var field in includes){
+      template[field] = includes[field];
     }
-    return template;
+    return compile(scope, template);
   }
 };

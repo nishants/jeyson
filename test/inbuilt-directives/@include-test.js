@@ -7,11 +7,11 @@ describe('@include', function() {
         templatePath  = "../__partial",
         expected      = {
           "name"     : "fromParent",
-          "origin"   :    "template"
+          "origin"   :  "template"
         },
         template      = {
           "name"     : "fromParent",
-          "@include" :templatePath
+          "@include" :  templatePath
         },
         readFile = function(path){
           expect(path).to.eql(templatePath);
@@ -21,8 +21,6 @@ describe('@include', function() {
 
     result = compiler.compile(scope, template, {readFile: readFile});
 
-    expect(result.name).to.eql("fromParent");
-    expect(result.origin).to.eql("template");
-    //expect(result).to.eql(expected);
+    expect(JSON.stringify(result)).to.eql(JSON.stringify(expected));
   });
 });
