@@ -30,10 +30,10 @@ describe('@include', function() {
     var scope         = {message: "hello world !"},
         expected      = {
           name     : "fromParent",
-          "origin" :  "hello world !"
+          origin   :  "hello world !"
         },
         template      = {
-          name     : "fromParent",
+          name       : "fromParent",
           "@include" :  templatePath
         },
         result ;
@@ -46,17 +46,17 @@ describe('@include', function() {
   it('should support in built directives in template', function () {
     var scope         = {list : ['one', 'two']},
         expected      = {
-          name   : "fromParent",
-          "list"   :  [{name : "one"},{name : "two"}]
+          listOne   : ["1", "2", "3", "4", "5"],
+          listTwo :  [{name : "one"},{name : "two"}]
         },
         template      = {
-          name     : "fromParent",
+          listOne     : "{{'1,2,3,4,5'.split(',')}}",
           "@include" :  templatePath
         },
         result ;
 
     result = compiler.compile(scope, template, expectTemplate(templatePath, {
-      list: {
+      listTwo: {
         "@repeat": "val in list",
         name: "{{val}}"}
     }));
