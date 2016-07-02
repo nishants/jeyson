@@ -2,20 +2,21 @@ var expect    = require('chai').expect,
     compiler  = require('../../src/index').create();
 
 describe('@include', function() {
+  var templatePath  = "../__partial",
+      template      = {
+        "name"     : "fromParent",
+        "@include" :  templatePath
+      },
+      readFile = function(path){
+        expect(path).to.eql(templatePath);
+        return '{"origin": "template"}';
+      };
+
   it('should include a json', function () {
     var scope         = {},
-        templatePath  = "../__partial",
         expected      = {
           "name"     : "fromParent",
           "origin"   :  "template"
-        },
-        template      = {
-          "name"     : "fromParent",
-          "@include" :  templatePath
-        },
-        readFile = function(path){
-          expect(path).to.eql(templatePath);
-          return '{"origin": "template"}';
         },
         result ;
 
@@ -26,7 +27,6 @@ describe('@include', function() {
 
   it('should support expressions in template', function () {
     var scope         = {message: "hello world !"},
-        templatePath  = "../__partial",
         expected      = {
           "name"     : "fromParent",
           "origin"   :  "hello world !"
@@ -48,7 +48,6 @@ describe('@include', function() {
 
   it('should support in built directives in template', function () {
     var scope         = {list : ['one', 'two']},
-        templatePath  = "../__partial",
         expected      = {
           "name"   : "fromParent",
           "list"   :  [{"name" : "one"},{"name" : "two"}]
