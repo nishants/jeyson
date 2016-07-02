@@ -46,7 +46,7 @@ describe('@include', function() {
     expect(JSON.stringify(result)).to.eql(JSON.stringify(expected));
   });
 
-  it.skip('should support in built directives in template', function () {
+  it('should support in built directives in template', function () {
     var scope         = {list : ['one', 'two']},
         templatePath  = "../__partial",
         expected      = {

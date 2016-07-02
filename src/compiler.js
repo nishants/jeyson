@@ -11,7 +11,7 @@ module.exports = {
     var result = {},
         self = this,
         compile = function(scope, template){
-          return self.compile(scope, template);
+          return self.compile(scope, template, config);
         },
         getTemplate = function(path){
           return templates.create(JSON.parse(config.readFile(path)));
@@ -28,7 +28,7 @@ module.exports = {
 
     for (var node in template) {
       var value       = template[node],
-          isSubtree   = (typeof value == "object");
+          isSubtree   = (typeof value == "object") && !(value instanceof Array);
 
       result[node] = isSubtree ? this.compile(scope, value) : linker.link(scope, value);
     }
