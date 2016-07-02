@@ -7,7 +7,7 @@ describe('@include', function() {
         "name"     : "fromParent",
         "@include" :  templatePath
       },
-      readFile = function(path){
+      getTemplate = function(path){
         expect(path).to.eql(templatePath);
         return '{"origin": "template"}';
       };
@@ -20,7 +20,7 @@ describe('@include', function() {
         },
         result ;
 
-    result = compiler.compile(scope, template, {readFile: readFile});
+    result = compiler.compile(scope, template, {getTemplate: getTemplate});
 
     expect(JSON.stringify(result)).to.eql(JSON.stringify(expected));
   });
@@ -35,13 +35,13 @@ describe('@include', function() {
           "name"     : "fromParent",
           "@include" :  templatePath
         },
-        readFile = function(path){
+        getTemplate = function(path){
           expect(path).to.eql(templatePath);
           return '{"origin": "{{message}}"}';
         },
         result ;
 
-    result = compiler.compile(scope, template, {readFile: readFile});
+    result = compiler.compile(scope, template, {getTemplate: getTemplate});
 
     expect(JSON.stringify(result)).to.eql(JSON.stringify(expected));
   });
@@ -56,7 +56,7 @@ describe('@include', function() {
           "name"     : "fromParent",
           "@include" :  templatePath
         },
-        readFile = function(path){
+        getTemplate = function(path){
           expect(path).to.eql(templatePath);
           return JSON.stringify({
             list: {
@@ -66,7 +66,7 @@ describe('@include', function() {
         },
         result ;
 
-    result = compiler.compile(scope, template, {readFile: readFile});
+    result = compiler.compile(scope, template, {getTemplate: getTemplate});
 
     expect(result).to.eql(expected);
   });

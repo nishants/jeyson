@@ -14,7 +14,7 @@ module.exports = {
           return self.compile(scope, template, config);
         },
         getTemplate = function(path){
-          return templates.create(JSON.parse(config.readFile(path)));
+          return templates.create(JSON.parse(config.getTemplate(path)));
         };
 
     config = config ? config : {};
