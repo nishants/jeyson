@@ -30,7 +30,7 @@ module.exports = {
       var value       = template[node],
           isSubtree   = (typeof value == "object") && !(value instanceof Array);
 
-      result[node] = isSubtree ? this.compile(scope, value) : linker.link(scope, value);
+      result[node] = isSubtree ? this.compile(scope, value, config) : linker.link(scope, value);
     }
     return result.render();
   }

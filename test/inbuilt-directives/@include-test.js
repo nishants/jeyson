@@ -45,7 +45,7 @@ describe('@include', function() {
     expect(JSON.stringify(result)).to.eql(JSON.stringify(expected));
   });
 
-  it('should support in built directives in template', function () {
+  it('should support directive in subtree', function () {
     var scope         = {list : ['one', 'two']},
         expected      = {
           listOne   : ["1", "2", "3", "4", "5"],
