@@ -1,22 +1,21 @@
-## JSO-NG
-
- - JSO-NG is a templating language for serving json content. \
- - It extends the notion of compiling html templates to json.
-
-- A json is a valid template in itself
-- You can use expressions inside jsons
-- Every template is rendered within a defined scope.
+## Jeyson Templates
+  - Every json is a valid template in itself.
+  - The templates can have expressions, which can execute javascript.
+  - These templates are compiled in context of a scope.
+  - Directives can pass instructions to compiler.
+  - Inbuilt directives for repeating, including other json etc.
+  - Custom directives can replace/modify template body, execute expressions, read other templates.
 
 ### Compiling Templates
 ```javascript
-var jsong         = require('jso-ng').create(),
+var jeyson        = require('jeyson').create(),
     scope         = {message: 'Hello!'},
     templateJson  = '{"message": "{{message}}"}',
-    compiled      = compiler.compile(scope , templateJson);
+    compiled      = jeyson.parse(scope, templateJson);
 ```
 
 ### Expressions
- - An expression is a field value, enclosed in '{{__javascript__}}'
+An expression is defined as '__{{expr}}__'
 
 Following __template.json__  :
 ```javascript
@@ -30,9 +29,9 @@ Following __template.json__  :
   "age": 54
  }
  ```
- - You can place a javascript snippet inside an expression.
 
-Following __template.json__  :
+### Javascript in Expressions.
+Any valid javascript snippet is a valid expression, e.g following __template.json__  :
 ```javascript
 {
   "list"      : "{{'one,two,three,four,five'.split(',')}}",
@@ -44,11 +43,8 @@ is compiled to
   "list"    : ["one", "two", "three", "four", "five"],
 }
  ```
-
-
-
 ### Scopes
-#### Any field on scope object is available as local variable in expressions
+Any field on scope object, is available as local variable in expressions.
 
 e.g.  Given scope defined as :
  ```javascript
@@ -67,7 +63,7 @@ is compiled to
 }
 ```
 
-#### Methods on scope can also be called back from expressions
+#### Scope can have methods
 
 e.g.  Given scope defined as :
  ```javascript
@@ -90,15 +86,54 @@ is compiled to
 }
 ```
 
-### Using Directives
- - [Define when an element becomes a directive]
+### Directives
+ - Directive is a field with name starting with __"@"__
+ - Directive __body__ is the parent subtree of directive field
+ - Directive argument is the value of directive field.
+
+ E.g.
+ ```javascript
+ {
+    "list"  : {
+      "@repeat" : "name in ['one','two','three','four','five']",
+      "id"      : "{{$index + 1}}",
+      "name"    : "{{name}}",
+    }
+ }
+```
+ - __"list"__  value is directive body (has a directive child)
+ - __@repeat__    is  directive name
+ - __count in [1,2,3,4,5]__ is directive argument
+
+ It will compile to following json :
+
+```javascript
+{
+  "list": [ {"id": "1","name" : "one"},
+            {"id": "2","name" : "two"},
+            {"id": "3","name" : "three"},
+            {"id": "4","name" : "four"},
+            {"id": "5","name" : "five"}];
+}
+ ```
+
 
 ### Inbuilt Directives
+Inbuilt directives for repeating, including other json etc.
+
+### @repeat
+ - $index
+ - array
+ - result
+
 ### Custom Directives
-  - Modifying
-  - Modifying
-  - Replacing directive contents
-  - Source code of inbuilt directives
+  - Reading scope
+  - Executing expressions
+  - Modifying body
+  - Replacing body
+  - Reading other templates by relative path
+
+### Source code of inbuilt directives
 
 
 
