@@ -1,6 +1,6 @@
 {
   "name": "jeyson",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Json template engine",
   "main": "./src/index.js",
   "scripts": {
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nishants/jso-ng.git"
+    "url": "git+https://github.com/nishants/jeyson.git"
   },
   "keywords": [
     "json",
