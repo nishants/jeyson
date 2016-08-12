@@ -1,6 +1,19 @@
 {
-  "template" : {"message" : "{{'he'+'llo'}}"},
   "scope"    : {},
   "config"   : {},
-  "result"   : {"message" : "hello"}
+  "template" : {
+    "message"   : "hello",
+    "sum"       : "{{0 + 1 }}",
+    "boolean"   : "{{1 == 2}}",
+    "list"      : "{{ 'one,two,three,four,five'.split(',') }}",
+    "repeater"  : {"@repeat" : "count in [1,2,3,4,5]", "id": "{{$index + count}}"}
+  }
+,
+  "result"   : {
+    "message" : "hello",
+    "sum"     : 1,
+    "boolean" : false,
+    "list"    : ["one", "two", "three", "four", "five"],
+    "repeater": [{"id": 1}, {"id": 3}, {"id": 5}, {"id": 7}, {"id": 9}]
+  }
 }
