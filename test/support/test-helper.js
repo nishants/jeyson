@@ -1,11 +1,14 @@
 var fs = require("fs"),
     getTemplate =
         function (path) {
-          return fs.readFileSync(path)
+          return JSON.parse(fs.readFileSync(path));
         };
 
 module.exports = {
-  getPlainJson : function(){
-    return JSON.parse(getTemplate("test/data/plain.json"));
+  plainJson : function(){
+    return getTemplate("test/data/plain.json");
+  },
+  expressionJson : function(){
+    return getTemplate("test/data/expression.json");
   }
 }
