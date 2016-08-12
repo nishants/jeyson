@@ -16,7 +16,8 @@ describe('JeysonTest', function() {
   });
 
   it('should parse a simple json', function () {
-    var template  = helper.plainJson();
-    expect(Jeyson.parse(scope, template, config)).to.eql({message: "hello"});
+    helper.specs().forEach(function(spec){
+      expect(Jeyson.parse(spec.scope, spec.template, spec.config)).to.eql(spec.result);
+    });
   });
 });

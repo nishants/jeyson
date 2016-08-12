@@ -1,0 +1,6 @@
+{
+  "template" : {"message" : "{{'he'+'llo'}}"},
+  "scope"    : {},
+  "config"   : {},
+  "result"   : {"message" : "hello"}
+}
