@@ -1,5 +1,102 @@
 var
-    scopes = {
+    linker = {
+      link: link = function(scope, element){
+        var isString        = (typeof element == "string"),
+            hasExpressions  = isString ? element.indexOf("{{") != -1 : false,
+            expression      = hasExpressions ? element.split("{{")[1].split("}}")[0] : null,
+            expressionValue = expression ? scope.execute(expression) : null,
+            replace         = expression && (element.length > ("{{}}" + expression).length);
+
+        expressionValue = replace ?  element.replace("{{"+expression+"}}", expressionValue) : expressionValue;
+
+        return hasExpressions ? expressionValue : element;
+      }
+    },
+    extend = function() {
+
+      var hasOwn = Object.prototype.hasOwnProperty;
+      var toStr = Object.prototype.toString;
+
+      var isArray = function isArray(arr) {
+        if (typeof Array.isArray === 'function') {
+          return Array.isArray(arr);
+        }
+
+        return toStr.call(arr) === '[object Array]';
+      };
+
+      var isPlainObject = function isPlainObject(obj) {
+        if (!obj || toStr.call(obj) !== '[object Object]') {
+          return false;
+        }
+
+        var hasOwnConstructor = hasOwn.call(obj, 'constructor');
+        var hasIsPrototypeOf = obj.constructor && obj.constructor.prototype && hasOwn.call(obj.constructor.prototype, 'isPrototypeOf');
+        // Not own constructor property must be Object
+        if (obj.constructor && !hasOwnConstructor && !hasIsPrototypeOf) {
+          return false;
+        }
+
+        // Own properties are enumerated firstly, so to speed up,
+        // if last one is own, then all properties are own.
+        var key;
+        for (key in obj) {/**/}
+
+        return typeof key === 'undefined' || hasOwn.call(obj, key);
+      };
+      var options, name, src, copy, copyIsArray, clone,
+          target = arguments[0],
+          i = 1,
+          length = arguments.length,
+          deep = false;
+
+      // Handle a deep copy situation
+      if (typeof target === 'boolean') {
+        deep = target;
+        target = arguments[1] || {};
+        // skip the boolean and the target
+        i = 2;
+      } else if ((typeof target !== 'object' && typeof target !== 'function') || target == null) {
+        target = {};
+      }
+
+      for (; i < length; ++i) {
+        options = arguments[i];
+        // Only deal with non-null/undefined values
+        if (options != null) {
+          // Extend the base object
+          for (name in options) {
+            src = target[name];
+            copy = options[name];
+
+            // Prevent never-ending loop
+            if (target !== copy) {
+              // Recurse if we're merging plain objects or arrays
+              if (deep && copy && (isPlainObject(copy) || (copyIsArray = isArray(copy)))) {
+                if (copyIsArray) {
+                  copyIsArray = false;
+                  clone = src && isArray(src) ? src : [];
+                } else {
+                  clone = src && isPlainObject(src) ? src : {};
+                }
+
+                // Never move original objects, clone them
+                target[name] = extend(deep, clone, copy);
+
+                // Don't bring in undefined values
+              } else if (typeof copy !== 'undefined') {
+                target[name] = copy;
+              }
+            }
+          }
+        }
+      }
+
+      // Return the modified object
+      return target;
+    },
+
+scopes = {
       create : function(scope){
         var error = function(params){
           var message =  "<error> :  <expression> for <scope>"
@@ -48,6 +145,36 @@ var
         return new Scope(scope);
       }
     },
+    templates = {
+      create: function(template){
+        template.__ = true; //TODO for trnsitioning to template model
+        template.deleteDirective = function(name){
+          delete this[name];
+        };
+        template.isDirective = function(){
+          for(var field in this){
+            if(field.startsWith("@")) {return true;}
+          }
+          return false;
+        };
+
+        template.render = function(){
+          delete this.isDirective;
+          delete this.render;
+          delete this.deleteDirective;
+          delete this.__;
+          delete this.copy;
+          return this;
+        };
+
+        template.copy = function(){
+          var result = {};
+          extend(true, result, this);
+          return result;
+        };
+
+        return template
+      }},
     compiler = {
       $compile: function (scope, template, config) {
         return this.compile(scopes.create(scope), template, config);
@@ -83,7 +210,6 @@ var
 
 Jeyson = {
   parse: function(scope, template, config){
-    return template;
     return compiler.$compile(scope, template, config);
   }
 }
