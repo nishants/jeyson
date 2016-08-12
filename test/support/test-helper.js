@@ -13,8 +13,13 @@ module.exports = {
     return getTemplate("test/data/expression.json");
   },
   specs : function(){
-    return fs.readdirSync(specsPath).map(function(specFile){
+    return fs.readdirSync(specsPath).filter(function(file){
+      return file.endsWith("_spec.json");
+    }).map(function(specFile){
       return JSON.parse(fs.readFileSync(specsPath +"/" + specFile));
     });
   },
+  getTemplate: function(specFile){
+    return fs.readFileSync(specsPath +"/" + specFile);
+  }
 }

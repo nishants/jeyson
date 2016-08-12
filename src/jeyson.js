@@ -23,7 +23,14 @@ var
               return compile(scope, scope.execute(params));
             }
           },
-          include = require("./directives/include"),
+          include = {
+            link: function(scope, template, params, compile, getTemplate){
+              var includes = compile(scope, getTemplate(params));
+              extend(true,
+                  template,
+                  includes);
+            }
+          },
           all = {};
 
       var Directives = {
