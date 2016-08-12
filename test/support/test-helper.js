@@ -6,12 +6,6 @@ var fs = require("fs"),
         };
 
 module.exports = {
-  plainJson : function(){
-    return getTemplate("test/data/plain.json");
-  },
-  expressionJson : function(){
-    return getTemplate("test/data/expression.json");
-  },
   specs : function(){
     return fs.readdirSync(specsPath).filter(function(file){
       return file.endsWith("_spec.json");
