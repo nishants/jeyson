@@ -5,7 +5,7 @@ var linker = require("./linker"),
 
 module.exports = {
   $compile: function (scope, template, config) {
-    return this.compile(scopes.create(scope), template, config);
+    return this.compile(scopes.create(scope), template, config ? config : {});
   },
   compile: function (scope, template, config) {
     var result = {},
@@ -17,7 +17,6 @@ module.exports = {
           return JSON.parse(config.getTemplate(path));
         };
 
-    config = config ? config : {};
 
     if(templates.isDirective(template)) {
       return directives.link(scope, template, compile, getTemplate);
