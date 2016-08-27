@@ -85,10 +85,6 @@ var extend = function() {
 var create = function (template) {
   template.__ = true; //TODO for trnsitioning to template model
   var value = template;
-  template.deleteDirective = function (name) {
-    delete this[name];
-  };
-
   template.render = function () {
     delete this.isDirective;
     delete this.render;
@@ -127,6 +123,9 @@ module.exports = {
     var result = {};
     extend(true, result, template);
     return create(result);
+  },
+  deleteDirective  : function (template, name) {
+    delete template[name];
   },
   isDirective  : function (template) {
     for (var field in template) {

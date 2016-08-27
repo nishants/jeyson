@@ -1,6 +1,7 @@
 var repeater = require("./directives/repeat"),
     compileD = require("./directives/compile"),
     include = require("./directives/include"),
+    templates = require("./templates"),
     all = {};
 
 var Directives = {
@@ -25,7 +26,7 @@ var Directives = {
     });
 
     param = template.__getChild(directive.name);
-    template.deleteDirective(directive.name)
+    templates.deleteDirective(template, directive.name)
 
     var replace = directive.directive.link(scope, template, param, compile, getTemplate);
     template = replace || compile(scope, template); // replace if directive returns valid value, else compile the template after directoryis done
