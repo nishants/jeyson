@@ -1,12 +1,12 @@
 var expect  = require('chai').expect,
-    jsong  = require("../src/index.js");
+    jeyson  = require("../src/index.js");
 
 describe('Compile jso-ng', function() {
 
   it('should find, execute and replace expressions by there values', function () {
     var scope       = {"id" : "some-id"},
         template    = {id: "my-{{id}}"},
-        parsed      = jsong.compile(scope, template);
+        parsed      = jeyson.compile(scope, template);
 
     expect(parsed.id).to.equal("my-some-id");
   });
@@ -14,7 +14,7 @@ describe('Compile jso-ng', function() {
   it('should support numbers and booleans in expression return type', function () {
     var scope       = {"crazy" : false, sober: true},
         template    = {crazy: "{{crazy}}", sober: "{{sober}}"},
-        parsed      = jsong.compile(scope, template);
+        parsed      = jeyson.compile(scope, template);
 
     expect(parsed.sober).to.equal(true);
     expect(parsed.crazy).to.equal(false);
@@ -23,7 +23,7 @@ describe('Compile jso-ng', function() {
   it('should parse sub trees', function () {
     var scope       = {"id" : "some-id"},
         template = {item: {id: "my-{{id}}"}},
-        parsed   = jsong.compile(scope, template);
+        parsed   = jeyson.compile(scope, template);
 
     expect(parsed.item.id).to.equal("my-some-id");
   });
@@ -38,7 +38,7 @@ describe('Compile jso-ng', function() {
               street : "street is {{item.address}}"
             }
           }},
-        parsed   = jsong.compile(scope, template);
+        parsed   = jeyson.compile(scope, template);
 
     expect(parsed.item.id).to.equal("id is one");
     expect(parsed.item.name).to.equal("name is me");

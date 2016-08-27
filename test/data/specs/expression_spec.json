@@ -3,7 +3,7 @@
   "config"   : {},
   "template" : {
     "message"   : "hello",
-    "float"       : "{{0 + 1.0 }}",
+    "float"     : "{{0 + 1.0 }}",
     "sum"       : "{{0 + 1 }}",
     "nil"       : "{{null}}",
     "boolean"   : "{{1 == 2}}",
