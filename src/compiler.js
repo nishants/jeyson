@@ -15,6 +15,18 @@ module.exports = {
         },
         getTemplate = function(path){
           return JSON.parse(config.getTemplate(path));
+        },
+        compileNode = function(scope, nodeValue){
+          if(Array.isArray(nodeValue)){
+            return nodeValue.map(function (element){
+              return compile(scope, element);
+            });
+          }
+          if(typeof nodeValue == "object"){
+            return compile(scope, nodeValue);
+          }
+
+          return linker.link(scope, nodeValue);
         };
 
 
@@ -23,10 +35,7 @@ module.exports = {
     }
 
     for(var node in template){
-          var value       = template[node],
-              isSubtree   = (typeof value == "object") && !(Array.isArray(value));
-
-          result[node] = isSubtree ? self.compile(scope, value, config) : linker.link(scope, value);
+      result[node] = compileNode(scope, template[node]);
     }
     return result;
   }

@@ -20,7 +20,7 @@ describe('Compile jso-ng', function() {
     expect(parsed.crazy).to.equal(false);
   });
 
-  it.skip('should compile expressions in objects inside array', function () {
+  it('should compile expressions in objects inside array', function () {
     var scope    = {"id" : "some-id"},
         template = {item: [{id: "my-{{id}}"}]},
         parsed   = jeyson.compile(scope, template);
