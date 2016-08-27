@@ -80,41 +80,12 @@ var extend = function() {
 
       // Return the modified object
       return target;
-    }
-    ;
-var create = function(template){
-      template.__ = true; //TODO for trnsitioning to template model
-      template.deleteDirective = function(name){
-        delete this[name];
-      };
-      template.isDirective = function(){
-        for(var field in this){
-          if(field.startsWith("@")) {return true;}
-        }
-        return false;
-      };
-
-    template.render = function(){
-      delete this.isDirective;
-      delete this.render;
-      delete this.deleteDirective;
-      delete this.__;
-      delete this.copy;
-      return this;
     };
-
-  template.copy = function(){
-    var result = {};
-    extend(true, result, this);
-    return result;
-  };
-
-  return template
-};
 
 module.exports = {
   create: function(template){
     template.__ = true; //TODO for trnsitioning to template model
+    var value = template;
     template.deleteDirective = function(name){
       delete this[name];
     };
@@ -131,6 +102,8 @@ module.exports = {
       delete this.deleteDirective;
       delete this.__;
       delete this.copy;
+      delete this.__setField;
+      delete this.__getField;
       return this;
     };
 
@@ -138,6 +111,14 @@ module.exports = {
       var result = {};
       extend(true, result, this);
       return result;
+    };
+
+    template.__setField = function(name, value){
+      template[name]   =  value
+    };
+
+    template.__getField = function(name){
+      return template[name];
     };
 
     return template
