@@ -5,7 +5,7 @@ var linker = require("./linker"),
 
 module.exports = {
   $compile: function (scope, template, config) {
-    return this.compile(scopes.create(scope), templates.create(template), config);
+    return this.compile(scopes.create(scope), template, config);
   },
   compile: function (scope, template, config) {
     var result = {},
@@ -14,25 +14,21 @@ module.exports = {
           return self.compile(scope, templates.copy(template), config);
         },
         getTemplate = function(path){
-          return templates.create(JSON.parse(config.getTemplate(path)));
+          return JSON.parse(config.getTemplate(path));
         };
 
     config = config ? config : {};
-
-    //TODO invoke compile through $comiple (always)
-    template.__ || (template = templates.create(template));
 
     if(templates.isDirective(template)) {
       return directives.link(scope, template, compile, getTemplate);
     }
 
-    template.__allFields().forEach(function(node){
-          var value       = template.__getChild(node),
+    for(var node in template){
+          var value       = template[node],
               isSubtree   = (typeof value == "object") && !(value instanceof Array);
 
           result[node] = isSubtree ? self.compile(scope, value, config) : linker.link(scope, value);
-        }
-    )
-    return result.render();
+    }
+    return result;
   }
 };

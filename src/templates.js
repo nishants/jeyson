@@ -82,47 +82,11 @@ var extend = function() {
       return target;
     };
 
-var create = function (template) {
-  template.__ = true; //TODO for trnsitioning to template model
-  var value = template;
-  template.render = function () {
-    delete this.isDirective;
-    delete this.render;
-    delete this.deleteDirective;
-    delete this.__;
-    delete this.copy;
-    delete this.__setChild;
-    delete this.__getChild;
-    delete this.__allFields;
-
-    for(field in this){
-      if(this[field].__){
-        this[field] = this[field].render();
-      }
-    }
-    return this;
-  };
-
-  template.__allFields = function () {
-    return Object.keys(template)
-  };
-
-  template.__setChild = function (name, value) {
-    value[name] = create(value)
-  };
-
-  template.__getChild = function (name) {
-    return create(template[name]);
-  };
-
-  return template
-};
 module.exports = {
-  create: create,
   copy  : function (template) {
     var result = {};
     extend(true, result, template);
-    return create(result);
+    return result;
   },
   deleteDirective  : function (template, name) {
     delete template[name];
