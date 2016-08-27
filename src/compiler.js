@@ -22,7 +22,7 @@ module.exports = {
     //TODO invoke compile through $comiple (always)
     template.__ || (template = templates.create(template));
 
-    if(template.isDirective()) {
+    if(templates.isDirective(template)) {
       return directives.link(scope, template, compile, getTemplate);
     }
 

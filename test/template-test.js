@@ -10,8 +10,8 @@ describe('TemplateTest', function() {
   it('template is a directive if one of its field starts with "@"', function () {
     var notHas  = templates.create({"id": 1, "name": "My Name"}),
         has     = templates.create({"id": 1, "@name": "My Name"});
-    expect(notHas.isDirective()).to.equal(false);
-    expect(has.isDirective()).to.equal(true);
+    expect(templates.isDirective(notHas)).to.equal(false);
+    expect(templates.isDirective(has)).to.equal(true);
   });
 
   it('template.copy should return deep copy of current template', function () {

@@ -88,14 +88,6 @@ var create = function (template) {
   template.deleteDirective = function (name) {
     delete this[name];
   };
-  template.isDirective = function () {
-    for (var field in template) {
-      if (field.startsWith("@")) {
-        return true;
-      }
-    }
-    return false;
-  };
 
   template.render = function () {
     delete this.isDirective;
@@ -114,7 +106,7 @@ var create = function (template) {
     }
     return this;
   };
-  
+
   template.__allFields = function () {
     return Object.keys(template)
   };
@@ -135,5 +127,13 @@ module.exports = {
     var result = {};
     extend(true, result, template);
     return create(result);
+  },
+  isDirective  : function (template) {
+    for (var field in template) {
+      if (field.startsWith("@")) {
+        return true;
+      }
+    }
+    return false;
   },
 };
