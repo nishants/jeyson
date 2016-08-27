@@ -114,13 +114,7 @@ var create = function (template) {
     }
     return this;
   };
-
-  template.copy = function () {
-    var result = {};
-    extend(true, result, value);
-    return create(result);
-  };
-
+  
   template.__allFields = function () {
     return Object.keys(template)
   };
@@ -136,4 +130,10 @@ var create = function (template) {
   return template
 };
 module.exports = {
-  create: create};
+  create: create,
+  copy  : function (template) {
+    var result = {};
+    extend(true, result, template);
+    return create(result);
+  },
+};

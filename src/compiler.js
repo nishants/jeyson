@@ -11,7 +11,7 @@ module.exports = {
     var result = {},
         self = this,
         compile = function(scope, template){
-          return self.compile(scope, template.__ ? template.copy() : template, config);
+          return self.compile(scope, templates.copy(template), config);
         },
         getTemplate = function(path){
           return templates.create(JSON.parse(config.getTemplate(path)));
