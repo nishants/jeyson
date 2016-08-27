@@ -18,8 +18,10 @@ describe('TemplateTest', function() {
     var template    = temlpates.create({"id": 1, "name": "My Name"}),
         templateOne = template.copy();
 
-    expect(template).to.deep.equal(templateOne);
+    expect(templateOne.id).to.equal(1);
+    expect(templateOne.name).to.equal("My Name");
+
     templateOne.id = "replaced";
-    expect(template.id).to.deep.equal(1);
+    expect(template.id).to.equal(1);
   });
 });

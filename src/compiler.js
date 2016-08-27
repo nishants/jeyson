@@ -5,13 +5,13 @@ var linker = require("./linker"),
 
 module.exports = {
   $compile: function (scope, template, config) {
-    return this.compile(scopes.create(scope), template, config);
+    return this.compile(scopes.create(scope), templates.create(template), config);
   },
   compile: function (scope, template, config) {
     var result = {},
         self = this,
         compile = function(scope, template){
-          return self.compile(scope, template, config);
+          return self.compile(scope, template.__ ? template.copy() : template, config);
         },
         getTemplate = function(path){
           return templates.create(JSON.parse(config.getTemplate(path)));
@@ -26,12 +26,13 @@ module.exports = {
       return directives.link(scope, template, compile, getTemplate);
     }
 
-    for (var node in template) {
-      var value       = template[node],
-          isSubtree   = (typeof value == "object") && !(value instanceof Array);
+    template.__allFields().forEach(function(node){
+          var value       = template.__getChild(node),
+              isSubtree   = (typeof value == "object") && !(value instanceof Array);
 
-      result[node] = isSubtree ? this.compile(scope, value, config) : linker.link(scope, value);
-    }
+          result[node] = isSubtree ? self.compile(scope, value, config) : linker.link(scope, value);
+        }
+    )
     return result.render();
   }
 };

@@ -91,7 +91,7 @@ describe('@include', function() {
 
     result = compiler.compile(scope, template, expectTemplate(templatePath, included));
 
-    expect(result).to.eql(expected);
+    expect(result).to.deep.equal(expected);
   });
 
 });

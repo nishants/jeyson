@@ -15,13 +15,16 @@ var Directives = {
     var directive,
         param;
 
-    for (var field in template) {
-      field.startsWith("@") && (directive = {
-        name: field,
-        directive: all[field]
-      });
-    }
-    param = template[directive.name];
+    template.__allFields().forEach(function(field){
+      if(field.startsWith("@")){
+        directive = {
+          name: field,
+          directive: all[field]
+        }
+      }
+    });
+
+    param = template.__getChild(directive.name);
     template.deleteDirective(directive.name)
 
     var replace = directive.directive.link(scope, template, param, compile, getTemplate);

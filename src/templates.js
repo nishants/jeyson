@@ -82,44 +82,58 @@ var extend = function() {
       return target;
     };
 
-module.exports = {
-  create: function(template){
-    template.__ = true; //TODO for trnsitioning to template model
-    var value = template;
-    template.deleteDirective = function(name){
-      delete this[name];
-    };
-    template.isDirective = function(){
-      for(var field in this){
-        if(field.startsWith("@")) {return true;}
+var create = function (template) {
+  template.__ = true; //TODO for trnsitioning to template model
+  var value = template;
+  template.deleteDirective = function (name) {
+    delete this[name];
+  };
+  template.isDirective = function () {
+    for (var field in template) {
+      if (field.startsWith("@")) {
+        return true;
       }
-      return false;
-    };
+    }
+    return false;
+  };
 
-    template.render = function(){
-      delete this.isDirective;
-      delete this.render;
-      delete this.deleteDirective;
-      delete this.__;
-      delete this.copy;
-      delete this.__setField;
-      delete this.__getField;
-      return this;
-    };
+  template.render = function () {
+    delete this.isDirective;
+    delete this.render;
+    delete this.deleteDirective;
+    delete this.__;
+    delete this.copy;
+    delete this.__setChild;
+    delete this.__getChild;
+    delete this.__allFields;
 
-    template.copy = function(){
-      var result = {};
-      extend(true, result, this);
-      return result;
-    };
+    for(field in this){
+      if(this[field].__){
+        this[field] = this[field].render();
+      }
+    }
+    return this;
+  };
 
-    template.__setField = function(name, value){
-      template[name]   =  value
-    };
+  template.copy = function () {
+    var result = {};
+    extend(true, result, value);
+    return create(result);
+  };
 
-    template.__getField = function(name){
-      return template[name];
-    };
+  template.__allFields = function () {
+    return Object.keys(template)
+  };
 
-    return template
-  }};
+  template.__setChild = function (name, value) {
+    value[name] = create(value)
+  };
+
+  template.__getChild = function (name) {
+    return create(template[name]);
+  };
+
+  return template
+};
+module.exports = {
+  create: create};

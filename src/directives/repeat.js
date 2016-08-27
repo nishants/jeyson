@@ -10,7 +10,7 @@ module.exports = {
       params[varName]   = list[index];
       params["$index"]  = index;
       var newScope      = scope.createChild(params);
-      parsed[index]     = compile(newScope, template.copy())
+      parsed[index]     = compile(newScope, template)
     }
 
     return parsed;
