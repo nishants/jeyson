@@ -10,8 +10,8 @@
 ```javascript
 var jeyson        = require('jeyson').create(),
     scope         = {message: 'Hello!'},
-    templateJson  = '{"message": "{{message}}"}',
-    compiled      = jeyson.parse(scope, templateJson);
+    templateJson  = {"message": "{{message}}"},
+    compiled      = jeyson.compile(scope, templateJson);
 ```
 
 ### Expressions
