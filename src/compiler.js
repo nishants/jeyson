@@ -25,7 +25,7 @@ module.exports = {
 
     for(var node in template){
           var value       = template[node],
-              isSubtree   = (typeof value == "object") && !(value instanceof Array);
+              isSubtree   = (typeof value == "object") && !(Array.isArray(value));
 
           result[node] = isSubtree ? self.compile(scope, value, config) : linker.link(scope, value);
     }
