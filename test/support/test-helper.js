@@ -10,7 +10,10 @@ module.exports = {
     return fs.readdirSync(specsPath).filter(function(file){
       return file.endsWith("_spec.json");
     }).map(function(specFile){
-      return JSON.parse(fs.readFileSync(specsPath +"/" + specFile));
+      var filename  = specsPath + "/" + specFile,
+          spec      = JSON.parse(fs.readFileSync(filename));
+      spec.filename = filename;
+      return spec;
     });
   },
   getTemplate: function(specFile){
