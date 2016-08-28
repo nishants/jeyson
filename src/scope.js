@@ -3,14 +3,14 @@ var error = require("./scope-error");
 var execute = function (scope, expression) {
   var contextScript = "";
   for (var field in scope) {
-    contextScript += ("var <field> = this.<field>;".replace("<field>", field).replace("<field>", field));
+    contextScript += ("var <field> = scope.<field>;".replace("<field>", field).replace("<field>", field));
   }
   scope.execute = function () {
     var escapeExpression = expression.replace(new RegExp("\'", 'g'), "\\'");
     try {
       return eval(contextScript + "eval('<expression>');".replace("<expression>", escapeExpression));
     }catch(err){
-      return error.create({scope: this, expression: expression, error: err}).message;
+      return error.create({scope: scope, expression: expression, error: err}).message;
     }
   };
   return scope.execute();
