@@ -28,6 +28,14 @@ describe('Compile jso-ng', function() {
     expect(parsed.item[0].id).to.equal("my-some-id");
   });
 
+  it('should compile expressions inside arrays', function () {
+    var scope    = {"id" : "some-id"},
+        template = {array: ["my-{{id}}"]},
+        parsed   = jeyson.compile(scope, template);
+
+    expect(parsed.array[0]).to.equal("my-some-id");
+  });
+
   it('should parse sub trees', function () {
     var scope       = {"id" : "some-id"},
         template = {item: {id: "my-{{id}}"}},

@@ -1,5 +1,5 @@
 module.exports = {
-  link: function(scope, template, params, compile){
+  link: function(scope, body, params, compile){
     var varName   = params.split(" in ")[0].trim(),
         listName  = params.split(" in ")[1].trim(),
         list      = scope.execute(listName),
@@ -10,7 +10,7 @@ module.exports = {
       params[varName]   = list[index];
       params["$index"]  = index;
       var newScope      = scope.createChild(params);
-      parsed[index]     = compile(newScope, template)
+      parsed[index]     = compile(newScope, body)
     }
 
     return parsed;

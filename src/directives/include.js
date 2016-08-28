@@ -1,10 +1,11 @@
 var extend = require("extend");
 
 module.exports = {
-  link: function(scope, template, params, compile, getTemplate){
-    var includes = compile(scope, getTemplate(params));
-    extend(true,
-        template,
-        includes);
+  link: function(scope, body, params, compile, getTemplate){
+    extend(
+        true,
+        body,
+        compile(scope, getTemplate(params))
+    );
   }
 };

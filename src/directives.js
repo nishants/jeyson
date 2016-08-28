@@ -1,6 +1,6 @@
-var repeater = require("./directives/repeat"),
-    compileD = require("./directives/compile"),
-    include = require("./directives/include"),
+var repeater  = require("./directives/repeat"),
+    compileIt = require("./directives/compile"),
+    include   = require("./directives/include"),
     templates = require("./templates"),
     all = {};
 
@@ -12,11 +12,12 @@ var Directives = {
   add: function (name, definition) {
     all[name] = {link: definition.link};
   },
-  link: function (scope, template, compile, getTemplate) {
+  link: function (scope, body, compile, getTemplate) {
     var directive,
-        param;
+        param,
+        replaceBody;
 
-    for(var field in template){
+    for(var field in body){
       if(field.startsWith("@")){
         directive = {
           name: field,
@@ -25,15 +26,15 @@ var Directives = {
       }
     };
 
-    param = template[directive.name];
-    templates.deleteDirective(template, directive.name)
+    param = body[directive.name];
+    templates.deleteDirective(body, directive.name)
 
-    var replace = directive.directive.link(scope, template, param, compile, getTemplate);
-    template = replace || compile(scope, template); // replace if directive returns valid value, else compile the template after directoryis done
-    return template;
+    // If directive returns body, replace template with returned body
+    // Else compile the updated body and return
+    return directive.directive.link(scope, body, param, compile, getTemplate) || compile(scope, body);
   }
 };
 Directives.add("@repeat", {link: repeater.link});
-Directives.add("@compile", {link: compileD.link});
+Directives.add("@compile", {link: compileIt.link});
 Directives.add("@include", {link: include.link});
 module.exports = Directives;
