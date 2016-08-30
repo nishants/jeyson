@@ -1,7 +1,22 @@
 {
   "scope"    : {"authorName": "DMG"},
   "template" : {
-    "if-null" :{
+    "check-if" :{
+      "author" : {"name": "DMG"},
+      "book"   : {
+        "@if"    : "1 == 1",
+        "@then"  : {"name" : "A book by DMG"}
+      }
+    },
+    "check-else" :{
+      "author" : {"name": "DMG"},
+      "book"   : {
+        "@if"    : "1 == 2",
+        "@then"  : {"name" : "A book by DMG"},
+        "@else"  : {"name" : "unknown"}
+      }
+    },
+    "check-no-else" :{
       "author" : {"name": "DMG"},
       "book"   : {
         "@if"    : "1 == 2",
@@ -10,12 +25,17 @@
     }
   },
   "result"   : {
-    "if-null" : {
+    "check-if" : {
       "author": {"name": "DMG"},
-      "book": {
-        "@if"    : "1 == 2",
-        "@then"  : {"name" : "A book by DMG"}
-      }
+      "book": {"name" : "A book by DMG"}
+    },
+    "check-else" :{
+      "author" : {"name": "DMG"},
+      "book"   : {"name" : "unknown"}
+    },
+    "check-no-else" :{
+      "author" : {"name": "DMG"},
+      "book"   : null
     }
   }
 }

@@ -1,6 +1,7 @@
 var repeater  = require("./directives/repeat"),
     compileIt = require("./directives/compile"),
     include   = require("./directives/include"),
+    ifThenElse= require("./directives/if-else-then"),
     templates = require("./templates"),
     all = {};
 
@@ -19,7 +20,7 @@ var Directives = {
 
     for(var field in body){
       if(field.startsWith("@")){
-        directive = {
+        directive = directive || {
           name: field,
           directive: all[field]
         }
@@ -35,10 +36,14 @@ var Directives = {
 
     // If directive returns body, replace template with returned body
     // Else compile the updated body and return
-    return directive.directive.link(scope, body, param, compile, getTemplate) || compile(scope, body);
+    var linked = directive.directive.link(scope, body, param, compile, getTemplate);
+
+    //Avoid undefined, allow null
+    return linked === undefined ? compile(scope, body) : linked ;
   }
 };
 Directives.add("@repeat", {link: repeater.link});
 Directives.add("@compile", {link: compileIt.link});
 Directives.add("@include", {link: include.link});
+Directives.add("@if", {link:      ifThenElse.link});
 module.exports = Directives;
