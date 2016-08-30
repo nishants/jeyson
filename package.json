@@ -1,7 +1,7 @@
 {
   "name": "jeyson",
   "version": "1.0.6",
-  "description": "Json template engine",
+  "description": "JSON Template Engine",
   "main": "./src/index.js",
   "scripts": {
     "test": "test"
@@ -16,10 +16,18 @@
   "keywords": [
     "json",
     "jeyson",
-    "jso-ng",
+
+    "json template",
+    "json templates",
+    "json templating",
+    "json templating engine",
+    "json templating engines",
+
     "template",
-    "factory",
-    "maker"
+    "templates",
+    "templating",
+    "templating engine",
+    "templating engines"
   ],
   "author": "nishant",
   "license": "WTFPL",
