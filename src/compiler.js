@@ -8,8 +8,7 @@ module.exports = {
     return this.compile(scopes.create(scope), template, config ? config : {});
   },
   compile: function (scope, template, config) {
-    var result = {},
-        self = this,
+    var self = this,
         compile = function(scope, template){
           return self.compile(scope, templates.copy(template), config);
         },
@@ -28,6 +27,7 @@ module.exports = {
     }
 
     if(templates.isSubtree(template)){
+      var result = {};
       for(var node in template){
         result[node] = compile(scope, template[node], config);
       }
