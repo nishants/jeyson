@@ -27,7 +27,7 @@ template = {
  }
 ```
 ### @if
-#### Will set field value to null, "@then"  or "@else", by condition in "@if"
+#### Will set field value to null, "@then"  or "@else", by condition 
 
 ```javascript
 {
