@@ -26,8 +26,28 @@ template = {
    "role"  : {"name" : "admin"}
  }
 ```
-### @if
+### @if, @then, @else
 #### Will set field value to null, "@then"  or "@else", by condition 
+
+```javascript
+{
+  "author"  : "ABC",
+  "book"    : {
+    "@if"   : "1 == 2",
+    "@then" : {"title" : "Harry Potter"}
+    "@else" : "unknown",
+  }
+}
+```
+
+will result in
+
+```javascript
+{
+ "author"  : "ABC",
+ "book"    : "unknown"
+}
+```
 
 ```javascript
 {
@@ -61,28 +81,6 @@ will result in
  "book"    : null
 }
 ```
-### @else
-
-```javascript
-{
-  "author"  : "ABC",
-  "book"    : {
-    "@if"   : "1 == 2",
-    "@then" : {"title" : "Harry Potter"}
-    "@else" : "unknown",
-  }
-}
-```
-
-will result in
-
-```javascript
-{
- "author"  : "ABC",
- "book"    : "unknown"
-}
-```
-
 ### @ignore-if
 #### Will not render the field itself, if the condition is false.
 e.g
