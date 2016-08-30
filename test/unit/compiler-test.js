@@ -1,5 +1,5 @@
 var expect  = require('chai').expect,
-    jeyson  = require("../../src/index.js");
+    jeyson  = require("../../src/index.js").create();
 
 describe('Compile jso-ng', function() {
 

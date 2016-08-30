@@ -1,10 +1,9 @@
 var expect    = require('chai').expect,
-    jeyson    = require('../../src/index');
+    jeyson    = require('../../src/index').create();
 
 describe('Directives', function() {
   it('should ignore directive if not defined', function () {
-    var app       = jeyson.create(),
-        template = {
+    var template = {
           "data" : [1,2,3],
           "@foo" : "foo-param"
         },
@@ -18,8 +17,7 @@ describe('Directives', function() {
   });
 
   it('should replace directive body with parsed result', function () {
-    var app       = jeyson.create(),
-        template = {
+    var template = {
           "data" : {
             "fooTarget" : {
               "@foo" : "foo-param"
@@ -28,7 +26,7 @@ describe('Directives', function() {
         },
         result ;
 
-    app.directive("@foo", {
+    jeyson.directive("@foo", {
       link: function(scope, body, param){
         expect(param).to.equal("foo-param");
         return "bar";
@@ -40,8 +38,7 @@ describe('Directives', function() {
   });
 
   it('should process a directive inside an array', function () {
-    var app       = jeyson.create(),
-        template = {
+    var template = {
           "data" : [{"fooTarget" : {"@foo" : "foo-param"}}]
         },
         expected = {
@@ -49,7 +46,7 @@ describe('Directives', function() {
         },
         result ;
 
-    app.directive("@foo", {
+    jeyson.directive("@foo", {
       link: function(scope, body, param){
         expect(param).to.equal("foo-param");
         return "bar";
@@ -60,8 +57,7 @@ describe('Directives', function() {
   });
 
   it('should replace directive body with a subtree', function () {
-    var app       = jeyson.create(),
-        template = {
+    var template = {
           "data" : {
             "fooTarget" : {
               "@foo" : "foo-param"
@@ -70,7 +66,7 @@ describe('Directives', function() {
         },
         result ;
 
-    app.directive("@foo", {
+    jeyson.directive("@foo", {
       link: function(){
         return {child: "bar"};
       }
@@ -81,8 +77,7 @@ describe('Directives', function() {
   });
 
   it('should apply nested directives', function () {
-    var app       = jeyson.create(),
-        template = {
+    var template = {
           "data" : {
             "fooTarget" : {
               "@foo" : "foo-param",
@@ -94,7 +89,7 @@ describe('Directives', function() {
         },
         result ;
 
-    app.directive("@foo", {
+    jeyson.directive("@foo", {
       link: function(scope, body){
         body.child = "foodified";
       }
@@ -107,7 +102,6 @@ describe('Directives', function() {
 
   it('should allow executing expressoin in directive', function () {
     var scope    = {param: "replaced by expression"},
-        app       = jeyson.create(),
         template = {
           "data" : {
             "fooTarget" : {
@@ -117,7 +111,7 @@ describe('Directives', function() {
         },
         result ;
 
-    app.directive("@foo", {
+    jeyson.directive("@foo", {
       link: function(scope){
         return scope.execute("param");
       }
@@ -129,7 +123,6 @@ describe('Directives', function() {
 
   it('should allow directives in template returned from directive', function () {
     var scope    = {param: "found"},
-        app       = jeyson.create(),
         template = {
           "data" : {
             "fooTarget" : {
@@ -139,7 +132,7 @@ describe('Directives', function() {
         },
         result ;
 
-    app.directive("@foo", {
+    jeyson.directive("@foo", {
       link: function(scope, body, param, compile){
         return compile(scope, {
           child: "{{param}}",
@@ -148,7 +141,7 @@ describe('Directives', function() {
       }
     });
 
-    app.directive("@bar", {
+    jeyson.directive("@bar", {
       link: function(scope, body, param){
         body.otherChild = "bar";
         expect(param).to.equal("bar-param");
