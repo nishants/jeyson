@@ -27,7 +27,7 @@ describe('e2e', function() {
   describe('Standalone', function() {
     helper.specs().forEach(function(spec){
       if(pendingForStandalone[spec.filename]){
-        it.skip(spec.filePath, function(){});
+        it.skip("Standalone : "+spec.filePath, function(){});
       } else{
         it(spec.filePath, function () {
           expect(Jeyson.parse(spec.scope, spec.template, config)).to.eql(spec.result);
