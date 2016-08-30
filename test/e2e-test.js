@@ -5,8 +5,9 @@ var expect          = require('chai').expect,
     config          = {
       getTemplate : helper.getTemplate
     },
-    specsIgnoreInStandalone = {
+    pendingForStandalone = {
       "if-else-then_spec.json" : true,
+      "undefined_directives_spec.json" : true,
     };
 
 describe('e2e', function() {
@@ -24,7 +25,7 @@ describe('e2e', function() {
 
   describe('Standalone', function() {
     helper.specs().forEach(function(spec){
-      if(specsIgnoreInStandalone[spec.filename]){
+      if(pendingForStandalone[spec.filename]){
         it.skip(spec.filePath, function(){});
       } else{
         it(spec.filePath, function () {
