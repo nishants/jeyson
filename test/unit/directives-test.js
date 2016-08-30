@@ -1,5 +1,5 @@
 var expect    = require('chai').expect,
-    jeyson    = require('../src/index');
+    jeyson    = require('../../src/index');
 
 describe('Directives', function() {
   it('should ignore directive if not defined', function () {

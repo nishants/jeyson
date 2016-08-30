@@ -1,5 +1,5 @@
 var expect  = require('chai').expect,
-    scopes  = require("../src/scope");
+    scopes  = require("../../src/scope");
 
 describe('Scope Test', function() {
 

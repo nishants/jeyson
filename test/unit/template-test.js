@@ -1,5 +1,5 @@
 var expect    = require('chai').expect,
-    templates = require('../src/templates');
+    templates = require('../../src/templates');
 
 describe('TemplateTest', function() {
   it('template has a directive if one of its field starts with "@"', function () {
