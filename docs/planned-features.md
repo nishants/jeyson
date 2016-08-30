@@ -5,7 +5,7 @@ Following are the conditional directives
  3. ignore-if (a system directive)
 
 ### @switch
-#### Will replace the body with "@<value>", "@default" or null based on choice.
+#### Will replace the body with "@[value]", "@default" or null based on choice.
 
 ```javascript
 scope    = {role : {name: "admin"}}
