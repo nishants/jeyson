@@ -9,7 +9,8 @@ var expect          = require('chai').expect,
       "arrays_spec.json"                          : true,
       "undefined_directives_spec.json"            : true,
       "include_template_in_array_spec.json"       : true,
-      "conditional-blocks/if-else-then_spec.json" : true
+      "conditional-blocks/if-else-then_spec.json" : true,
+      "conditional-blocks/ignore-if_spec.json"    : true,
     };
 
 describe('e2e : Standalone', function() {

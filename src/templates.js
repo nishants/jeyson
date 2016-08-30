@@ -100,6 +100,14 @@ var Templates = {
   deleteDirective: function (template, name) {
     delete template[name];
   },
+  isIgnored : function(scope, temlpate){
+    return !! scope.execute(temlpate["@ignore-if"] || "");
+  },
+  cleanup  : function(template){
+    var     clean = Templates.copy(template);
+    delete  clean["@ignore-if"];
+    return  clean;
+  },
   copy: function (template) {
     if (Templates.isList(template)){
       return template.map(function(element){

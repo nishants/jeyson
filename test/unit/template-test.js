@@ -1,4 +1,5 @@
-var expect    = require('chai').expect,
+var expect     = require('chai').expect,
+    scopes     = require("../../src/scope"),
     templates = require('../../src/templates');
 
 describe('TemplateTest', function() {
@@ -25,5 +26,20 @@ describe('TemplateTest', function() {
         copy        = templates.copy(template);
 
     expect(copy).to.deep.equal(template);
+  });
+
+  it('template.ignore should return true if ignored condition is true', function () {
+    var template    = {name: "My Name", "@ignore-if" : "1 == 1"},
+        scope       = scopes.create({}),
+        isIgnored   = templates.isIgnored(scope, template);
+
+    expect(isIgnored).to.equal(true);
+  });
+  it('template.ignore should return true if ignored condition is false', function () {
+    var template    = {name: "My Name", "@ignore-if" : "1 == 2"},
+        scope       = scopes.create({}),
+        isIgnored   = templates.isIgnored(scope, template);
+
+    expect(isIgnored).to.equal(false);
   });
 });

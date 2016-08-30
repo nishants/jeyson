@@ -29,7 +29,10 @@ module.exports = {
     if(templates.isSubtree(template)){
       var result = {};
       for(var node in template){
-        result[node] = compile(scope, template[node], config);
+        var exclude = templates.isIgnored(scope, template[node]);
+        if(!exclude){
+          result[node] = compile(scope, templates.cleanup(template[node]), config);
+        }
       }
       return result;
     }
