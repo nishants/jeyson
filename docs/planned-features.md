@@ -83,7 +83,7 @@ will result in
 }
 ```
 
-### ignore-if
+### @ignore-if
 #### Will not render the field itself, if the condition is false.
 e.g
 {
