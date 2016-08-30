@@ -82,16 +82,26 @@ var extend = function() {
       return target;
     };
 
-module.exports = {
-  copy  : function (template) {
+var Templates = {
+  copy: function (template) {
+    if (Templates.isList(template)){
+      return template.map(function(element){
+        return Templates.copy(element);
+      });
+    }
     var result = {};
-    extend(true, result, template);
+    if(Templates.isSubtree(template)){
+      extend(true, result, template);
+    } else{
+      return result = template;
+    }
+
     return result;
   },
-  deleteDirective  : function (template, name) {
+  deleteDirective: function (template, name) {
     delete template[name];
   },
-  isDirective  : function (template) {
+  isDirective: function (template) {
     for (var field in template) {
       if (field.startsWith("@")) {
         return true;
@@ -99,4 +109,11 @@ module.exports = {
     }
     return false;
   },
+  isSubtree: function (template) {
+    return (typeof template == "object") && !Array.isArray(template);
+  },
+  isList: function (template) {
+    return Array.isArray(template);
+  }
 };
+module.exports = Templates;

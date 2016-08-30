@@ -19,4 +19,11 @@ describe('TemplateTest', function() {
     templateOne.id = "replaced";
     expect(template.id).to.equal(1);
   });
+
+  it('template.copy should copy a list type', function () {
+    var template    = ["one", "two"],
+        copy        = templates.copy(template);
+
+    expect(copy).to.deep.equal(template);
+  });
 });
