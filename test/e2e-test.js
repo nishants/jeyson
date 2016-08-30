@@ -10,6 +10,7 @@ var expect          = require('chai').expect,
       "undefined_directives_spec.json" : true,
       "arrays_spec.json" : true,
       "include_template_in_array_spec.json" : true,
+      "conditional-blocks/if-else-then_spec.json" : true,
     };
 
 describe('e2e', function() {

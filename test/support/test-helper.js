@@ -1,5 +1,6 @@
-var fs = require("fs"),
-    specsPath = "test/data/specs",
+var fs          = require("fs"),
+    wrench      = require("wrench"),
+    specsPath   = "test/data/specs",
     getTemplate =
         function (path) {
           return JSON.parse(fs.readFileSync(path));
@@ -7,7 +8,7 @@ var fs = require("fs"),
 
 module.exports = {
   specs : function(){
-    return fs.readdirSync(specsPath).filter(function(file){
+    return wrench.readdirSyncRecursive(specsPath).filter(function(file){
       return file.endsWith("_spec.json");
     }).map(function(specFile){
       var filename  = specsPath + "/" + specFile,

@@ -1,0 +1,21 @@
+{
+  "scope"    : {"authorName": "DMG"},
+  "template" : {
+    "if-null" :{
+      "author" : {"name": "DMG"},
+      "book"   : {
+        "@if"    : "1 == 2",
+        "@then"  : {"name" : "A book by DMG"}
+      }
+    }
+  },
+  "result"   : {
+    "if-null" : {
+      "author": {"name": "DMG"},
+      "book": {
+        "@if"    : "1 == 2",
+        "@then"  : {"name" : "A book by DMG"}
+      }
+    }
+  }
+}
