@@ -3,12 +3,9 @@ var templates = require("./templates");
 module.exports = {
   create: function(){
     var Directives = {
-      all: {},
-      get: function (name) {
-        return all[name];
-      },
+      linkers: {},
       add: function (name, definition) {
-        Directives.all[name] = {link: definition.link};
+        Directives.linkers[name] = {link: definition.link};
       },
       link: function (scope, body, compile, getTemplate) {
         var directive,
@@ -18,7 +15,7 @@ module.exports = {
           if(field.startsWith("@")){
             directive = directive || {
                   name: field,
-                  linker: Directives.all[field]
+                  linker: Directives.linkers[field]
                 }
           }
         };
@@ -38,11 +35,6 @@ module.exports = {
         return linked === undefined ? compile(scope, body) : linked ;
       }
     };
-
-    Directives.add("@repeat"    , {link: require("./directives/repeat").link});
-    Directives.add("@compile"   , {link: require("./directives/compile").link});
-    Directives.add("@include"   , {link: require("./directives/include").link});
-    Directives.add("@if"        , {link: require("./directives/if-else-then").link});
 
     return Directives;
   }
