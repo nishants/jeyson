@@ -4,8 +4,8 @@ Following are the conditional directives
  2. if
  3. ignore-if (a system directive)
 
-#### switch
-Will replace the body with value based on value, "@default" or null
+#### @switch
+Will replace the body with "@<value>", "@default" or null based on choice.
 
 ```javascript
 scope    = {role : {name: "admin"}}
@@ -26,37 +26,44 @@ template = {
    "role"  : {"name" : "admin"}
  }
 ```
-#### if
+#### @if
 Will set field value to null, "@then"  or "@else", by condition in "@if"
-e.g
+
+```javascript
 {
   "author"  : "ABC",
   "book"    : {
     "@if"   : "1 == 1",
     "@then" : {"title" : "Harry Potter"}
 }
-
+```
 will result in
+```javascript
 {
  "author"  : "ABC",
  "book"    : {"title" : "Harry Potter"}
 }
+```
 
-
+```javascript
 {
   "author"  : "ABC",
   "book"    : {
     "@if"   : "1 == 2",
     "@then" : {"title" : "Harry Potter"}
 }
+```
 
 will result in
+```javascript
 {
  "author"  : "ABC",
  "book"    : null
 }
+```
+#### @else
 
-
+```javascript
 {
   "author"  : "ABC",
   "book"    : {
@@ -65,12 +72,16 @@ will result in
     "@else" : "unknown",
   }
 }
+```
 
 will result in
+
+```javascript
 {
  "author"  : "ABC",
  "book"    : "unknown"
 }
+```
 
 #### ignore-if
 Will not render the field itself, if the condition is false.
