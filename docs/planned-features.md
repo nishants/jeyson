@@ -86,6 +86,7 @@ will result in
 ### @ignore-if
 #### Will not render the field itself, if the condition is false.
 e.g
+```javascript
 {
   "author"  : "ABC",
   "book"    : {
@@ -93,12 +94,14 @@ e.g
     "title"     : "Harry Potter"
   }
 }
+```
 
 will result in
-
+```javascript
 {
  "author"  : "ABC"
 }
+```
 
 #### System Directives
 These directives will get special treatment from compiler.
