@@ -107,4 +107,3 @@ will result in
 These directives will get special treatment from compiler.
 This was needed to allow ignoring a field-name from template .Doing this is not possible with custom directives.
 Other inbuilt directives (@include, @repeat) are not system directives, but custom directives that come bundled by default.
-This an experimental feature, and might not be supported in future (removing field-name itself seems have a smell about it).
