@@ -1,6 +1,6 @@
 {
   "scope"    : {"userName": "Billu"},
-  "config"   : {},
+
   "template" : {
     "message"   : "Hello {{userName}}",
     "float"     : "{{0 + 1.0 }}",
@@ -9,8 +9,8 @@
     "boolean"   : "{{1 == 2}}",
     "list"      : "{{ 'one,two,three,four,five'.split(',') }}",
     "repeater"  : {"@repeat" : "count in [1,2,3,4,5]", "id": "{{$index + count}}"}
-  }
-,
+  },
+
   "result"   : {
     "message" : "Hello Billu",
     "sum"     : 1,

@@ -4,6 +4,7 @@
   "template" : {
     "body"   : {"@include": "shared/shared.json"}
   },
+
   "result"   : {
     "body" : {"shared" : "a shared json template"}
   }

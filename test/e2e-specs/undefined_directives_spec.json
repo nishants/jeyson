@@ -1,6 +1,6 @@
 {
   "scope"    : {"userName": "Billu"},
-  "config"   : {},
+
   "template" : {
     "@unkownDirective" : "directives should be ignored if not defined",
     "@unkownDirective2" : {"message" : "directives should be ignored if not defined"}

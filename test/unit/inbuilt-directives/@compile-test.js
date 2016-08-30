@@ -1,5 +1,5 @@
 var expect    = require('chai').expect,
-    compiler  = require('../../src/index').create();
+    compiler  = require('../../../src/index').create();
 
 describe('@compile', function() {
   it('should compile an expression', function () {

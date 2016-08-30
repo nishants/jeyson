@@ -1,5 +1,5 @@
 var expect    = require('chai').expect,
-    compiler  = require('../../src/index').create();
+    compiler  = require('../../../src/index').create();
 
 describe('Repeater', function() {
   it('should replace directory template with list', function () {

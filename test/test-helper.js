@@ -1,6 +1,6 @@
 var fs          = require("fs"),
     wrench      = require("wrench"),
-    specsPath   = "test/data/specs",
+    specsPath   = "test/e2e-specs",
     getTemplate =
         function (path) {
           return JSON.parse(fs.readFileSync(path));

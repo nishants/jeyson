@@ -1,0 +1,36 @@
+{
+  "scope": {
+    "message": "message-from-scope !"
+  },
+
+  "template": {
+    "data": [
+      "message",
+      "{{message}}",
+      {
+        "name": "{{message}}",
+        "data": [
+                  {"name": "{{message}}"},
+                  "{{message}}",
+                  "message",
+                  {"data": [{"name": "{{message}}"}, "{{message}}", "message"]}
+        ]
+      }
+    ]
+  },
+
+  "result": {
+    "data": [
+      "message",
+      "message-from-scope !",
+      {
+        "name": "message-from-scope !",
+        "data": [
+                  {"name": "message-from-scope !"},
+                  "message-from-scope !", "message",
+                  {"data": [{"name": "message-from-scope !"}, "message-from-scope !", "message"]}
+        ]
+      }
+    ]
+  }
+}
