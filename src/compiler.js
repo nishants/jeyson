@@ -15,28 +15,25 @@ module.exports = {
         },
         getTemplate = function(path){
           return JSON.parse(config.getTemplate(path));
-        },
-        compileNode = function(scope, nodeValue){
-          if(Array.isArray(nodeValue)){
-            return nodeValue.map(function (element){
-              return compile(scope, element);
-            });
-          }
-          if(typeof nodeValue == "object"){
-            return compile(scope, nodeValue);
-          }
-
-          return linker.link(scope, nodeValue);
         };
-
 
     if(templates.isDirective(template)) {
       return directives.link(scope, template, compile, getTemplate);
     }
 
-    for(var node in template){
-      result[node] = compileNode(scope, template[node]);
+    if(templates.isList(template)) {
+      return template.map(function(element){
+        return compile(scope, element, config);
+      });
     }
-    return result;
+
+    if(templates.isSubtree(template)){
+      for(var node in template){
+        result[node] = compile(scope, template[node], config);
+      }
+      return result;
+    }
+
+    return linker.link(scope, template);
   }
 };
