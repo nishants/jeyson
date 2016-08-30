@@ -83,25 +83,13 @@ var extend = function() {
     };
 
 var Templates = {
-  copy: function (template) {
-    if (Templates.isList(template)){
-      return template.map(function(element){
-        return Templates.copy(element);
-      });
-    }
-    var result = {};
-    if(Templates.isSubtree(template)){
-      extend(true, result, template);
-    } else{
-      return result = template;
-    }
-
-    return result;
+  isList: function (template) {
+    return Array.isArray(template);
   },
-  deleteDirective: function (template, name) {
-    delete template[name];
+  isSubtree: function (template) {
+    return (typeof template == "object") && !Templates.isList(template);
   },
-  isDirective: function (template) {
+  hasDirective: function (template) {
     for (var field in template) {
       if (field.startsWith("@")) {
         return true;
@@ -109,11 +97,23 @@ var Templates = {
     }
     return false;
   },
-  isSubtree: function (template) {
-    return (typeof template == "object") && !Array.isArray(template);
+  deleteDirective: function (template, name) {
+    delete template[name];
   },
-  isList: function (template) {
-    return Array.isArray(template);
+  copy: function (template) {
+    if (Templates.isList(template)){
+      return template.map(function(element){
+        return Templates.copy(element);
+      });
+    }
+
+    if(Templates.isSubtree(template)){
+      var result = {};
+      extend(true, result, template);
+      return result;
+    }
+
+    return template;
   }
 };
 module.exports = Templates;

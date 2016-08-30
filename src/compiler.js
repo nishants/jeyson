@@ -1,7 +1,7 @@
-var linker = require("./linker"),
-    scopes = require("./scope"),
-    templates = require("./templates"),
-    directives = require("./directives");
+var linker      = require("./linker"),
+    scopes      = require("./scope"),
+    templates   = require("./templates"),
+    directives  = require("./directives");
 
 module.exports = {
   $compile: function (scope, template, config) {
@@ -16,7 +16,7 @@ module.exports = {
           return JSON.parse(config.getTemplate(path));
         };
 
-    if(templates.isDirective(template)) {
+    if(templates.hasDirective(template)) {
       return directives.link(scope, template, compile, getTemplate);
     }
 
