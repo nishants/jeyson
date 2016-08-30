@@ -17,7 +17,7 @@ describe('Directives', function() {
     expect(jeyson.compile({}, template)).to.deep.equal(expected);
   });
 
-  it('should replace directory body with parsed result', function () {
+  it('should replace directive body with parsed result', function () {
     var app       = jeyson.create(),
         template = {
           "data" : {
@@ -39,7 +39,27 @@ describe('Directives', function() {
     expect(result.data.fooTarget).to.equal("bar");
   });
 
-  it('should replace directory body with a subtree', function () {
+  it('should process a directive inside an array', function () {
+    var app       = jeyson.create(),
+        template = {
+          "data" : [{"fooTarget" : {"@foo" : "foo-param"}}]
+        },
+        expected = {
+          "data" : [{"fooTarget" : "bar"}]
+        },
+        result ;
+
+    app.directive("@foo", {
+      link: function(scope, body, param){
+        expect(param).to.equal("foo-param");
+        return "bar";
+      }
+    });
+
+    expect(jeyson.compile({}, template)).to.deep.equal(expected);
+  });
+
+  it('should replace directive body with a subtree', function () {
     var app       = jeyson.create(),
         template = {
           "data" : {

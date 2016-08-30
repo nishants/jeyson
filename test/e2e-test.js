@@ -8,7 +8,8 @@ var expect          = require('chai').expect,
     pendingForStandalone = {
       "if-else-then_spec.json" : true,
       "undefined_directives_spec.json" : true,
-      "arrays_spec.json" : true
+      "arrays_spec.json" : true,
+      "include_template_in_array_spec.json" : true,
     };
 
 describe('e2e', function() {
