@@ -4,6 +4,9 @@ var expect          = require('chai').expect,
     jeyson          = require('../src/index.js').create(),
     config          = {
       getTemplate : helper.getTemplate
+    },
+    specsIgnoreInStandalone = {
+      "if-else-then_spec.json" : true,
     };
 
 describe('e2e', function() {
@@ -13,7 +16,7 @@ describe('e2e', function() {
 
   describe('Module', function() {
     helper.specs().forEach(function(spec){
-      it(spec.filename, function () {
+      it(spec.filePath, function () {
         expect(jeyson.compile(spec.scope, spec.template, config)).to.eql(spec.result);
       });
     });
@@ -21,10 +24,13 @@ describe('e2e', function() {
 
   describe('Standalone', function() {
     helper.specs().forEach(function(spec){
-      it(spec.filename, function () {
-        expect(Jeyson.parse(spec.scope, spec.template, config)).to.eql(spec.result);
-      });
-
+      if(specsIgnoreInStandalone[spec.filename]){
+        it.skip(spec.filePath, function(){});
+      } else{
+        it(spec.filePath, function () {
+          expect(Jeyson.parse(spec.scope, spec.template, config)).to.eql(spec.result);
+        });
+      }
     });
   });
 

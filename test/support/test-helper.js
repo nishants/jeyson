@@ -12,7 +12,8 @@ module.exports = {
     }).map(function(specFile){
       var filename  = specsPath + "/" + specFile,
           spec      = JSON.parse(fs.readFileSync(filename));
-      spec.filename = filename;
+      spec.filePath = filename;
+      spec.filename = specFile;
       return spec;
     });
   },
