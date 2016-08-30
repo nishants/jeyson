@@ -6,9 +6,10 @@ Following are the conditional directives
 
 #### switch
 Will replace the body with value based on value, "@default" or null
-e.g
-Given scope  = {role : {name: "admin"}}
- And template = {
+
+```javascript
+scope    = {role : {name: "admin"}}
+template = {
 "user"    : {
   "role"    : {
      "@switch"    : "role.name",
@@ -17,13 +18,14 @@ Given scope  = {role : {name: "admin"}}
      "@default"   : {"name" : "guest"}
   }
 }
-
- Then compiled output will be
-   And template = {
-     "user"   : {
-        "role"  : {"name" : "admin"}
-   }
-
+```
+Will compile to 
+```javascript
+template = {
+   "user"   : {
+   "role"  : {"name" : "admin"}
+ }
+```
 #### if
 Will set field value to null, "@then"  or "@else", by condition in "@if"
 e.g
