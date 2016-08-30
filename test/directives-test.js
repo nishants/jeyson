@@ -1,7 +1,22 @@
 var expect    = require('chai').expect,
     jeyson    = require('../src/index');
 
-describe('Directive Definitions', function() {
+describe('Directives', function() {
+  it('should ignore directive if not defined', function () {
+    var app       = jeyson.create(),
+        template = {
+          "data" : [1,2,3],
+          "@foo" : "foo-param"
+        },
+        expected = {
+          "data" : [1,2,3],
+          "@foo" : "foo-param"
+        },
+        result ;
+
+    expect(jeyson.compile({}, template)).to.deep.equal(expected);
+  });
+
   it('should replace directory body with parsed result', function () {
     var app       = jeyson.create(),
         template = {

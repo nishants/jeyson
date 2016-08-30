@@ -26,6 +26,10 @@ var Directives = {
       }
     };
 
+    //ignore an undefined directive
+    if(!directive.directive){
+      return body;
+    }
     param = body[directive.name];
     templates.deleteDirective(body, directive.name)
 
