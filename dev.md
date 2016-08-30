@@ -1,12 +1,15 @@
 
 ### Running all tests
-mocha tests/ --recursive
+mocha test/ --recursive
 
-### Running single test file
-mocha tests/compiler-test.js
+### Running all unit tests
+mocha test/unit --recursive
+
+### Running single unit test file
+mocha test/unit/compiler-test.js
 
 ### Running end to end tests
-mocha tests/e2e.js
+mocha test/e2e
 
 ### publish gem 
 npm publish 
