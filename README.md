@@ -3,7 +3,7 @@
   - The templates can have expressions, which can execute javascript.
   - These templates are compiled in context of a scope.
   - Directives can pass instructions to compiler.
-  - Inbuilt directives for repeating, including other json etc.
+  - Inbuilt directives for iterating, conditional contents, including other templates etc.
   - Custom directives can replace/modify template body, execute expressions, read other templates.
 
 ### Compiling Templates
