@@ -1,16 +1,8 @@
 var expect          = require('chai').expect,
     helper          = require("../test-helper"),
-    STANDALONE_PATH = '../../src/jeyson-standalone.js',
+    STANDALONE_PATH = '../../src/standalone.js',
     config          = {
       getTemplate : helper.getTemplate
-    },
-    pendingForStandalone = {
-      "if-else-then_spec.json"                    : true,
-      "arrays_spec.json"                          : true,
-      "undefined_directives_spec.json"            : true,
-      "include_template_in_array_spec.json"       : true,
-      "conditional-blocks/if-else-then_spec.json" : true,
-      "conditional-blocks/ignore-if_spec.json"    : true,
     };
 
 describe('e2e : Standalone', function() {
@@ -19,14 +11,9 @@ describe('e2e : Standalone', function() {
   });
 
   helper.specs().forEach(function(spec){
-    if(pendingForStandalone[spec.filename]){
-      it.skip("Standalone : "+spec.filePath, function(){});
-    } else{
-      it(spec.filePath, function () {
-        expect(Jeyson.parse(spec.scope, spec.template, config)).to.eql(spec.result);
-      });
-    }
+    it(spec.filePath, function () {
+      expect(Jeyson.create().compile(spec.scope, spec.template, config)).to.eql(spec.result);
+    });
   });
-
 });
 
