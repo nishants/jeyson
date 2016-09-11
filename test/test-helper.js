@@ -1,10 +1,6 @@
 var fs          = require("fs"),
     wrench      = require("wrench"),
-    specsPath   = "test/e2e-specs",
-    getTemplate =
-        function (path) {
-          return JSON.parse(fs.readFileSync(path));
-        };
+    specsPath   = "test/e2e-specs";
 
 module.exports = {
   specs : function(){

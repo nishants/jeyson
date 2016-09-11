@@ -1,6 +1,6 @@
 var expect          = require('chai').expect,
     helper          = require("../test-helper"),
-    STANDALONE_PATH = '../../src/standalone.js',
+    STANDALONE_PATH = '../../dist/jeyson.js',
     config          = {
       getTemplate : helper.getTemplate
     };
