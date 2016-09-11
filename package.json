@@ -34,9 +34,10 @@
   },
   "homepage": "https://github.com/nishants/jso-ng#readme",
   "dependencies": {
-    "collect-require": "^1.1.0"
   },
   "devDependencies": {
+    "collect-require": "^1.1.0",
+    "require-self": "^0.1.0",
     "chai": "^3.5.0",
     "mocha": "^2.4.5",
     "wrench": "^1.5.9"
