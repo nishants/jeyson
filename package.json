@@ -1,11 +1,15 @@
 {
-  "name": "jeyson",
-  "version": "1.0.6",
-  "description": "JSON Template Engine",
-  "main": "./src/index.js",
+  "name"        : "jeyson",
+  "version"     : "1.0.6",
+  "description" : "JSON Template Engine",
+  "main"        : "./src/index.js",
+
   "scripts": {
-    "test": "test"
+    "test"    : "mocha test/ --recursive",
+    "build"   : "node package.js",
+    "pretest": "npm run build"
   },
+
   "directories": {
     "test": "test"
   },
@@ -36,7 +40,7 @@
   "dependencies": {
   },
   "devDependencies": {
-    "collect-require": "^1.1.0",
+    "collect-require": "^1.3.0",
     "require-self": "^0.1.0",
     "chai": "^3.5.0",
     "mocha": "^2.4.5",

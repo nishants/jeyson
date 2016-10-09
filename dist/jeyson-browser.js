@@ -491,4 +491,4 @@ module.exports = extend;
       },
     };
 
-GLOBAL.Jeyson = standalone[main]();
+window.Jeyson = standalone[main]();

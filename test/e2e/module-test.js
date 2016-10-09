@@ -1,6 +1,6 @@
 var expect          = require('chai').expect,
     helper          = require("./../test-helper"),
-    jeyson          = require('jeyson').create(),
+    jeyson          = require('../../src/index').create(),
     config          = {
       getTemplate : helper.getTemplate
     };

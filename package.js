@@ -1,10 +1,12 @@
 var collector = require("collect-require"),
     baseDir   = "src",
     main      = "index.js",
-    output    = "dist/jeyson.js";
+    nashornPath    = "dist/jeyson.js",
+    browserPath    = "dist/jeyson-browser.js";
 
 collector.collect(baseDir).save({
-  path    : output,
+  buildNashorn    : nashornPath,
+  buildBrowser    : browserPath,
   main    : main ,
-  apiName : "Jeyson",
+  apiName : "Jeyson"
 });
